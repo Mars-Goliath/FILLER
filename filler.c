@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/28 23:29:17 by mlambert          #+#    #+#             */
-/*   Updated: 2017/02/28 23:55:10 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/03/01 12:03:07 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	size_init_piece(t_core *core, int size_init_piece)
 	if (size_init_piece == 1)
 	{
 		ft_bzero(&core);
-
-
+		core->map->x = -1;
+		core->map->y = -1;
+		core->piece->x = -1;
+		core->map->y = -1;
 	}
 	if (size_init_piece == 2)
 	{
@@ -60,24 +62,26 @@ void	size_init_piece(t_core *core, int size_init_piece)
 	}
 }
 
-void		filler(int fd)
+int			filler(int fd)
 {
 	t_core core;
 	char	*line;
 
+	line = NULL;
+	size_init_piece(&core, 1);
 	while (gnl(fd, &line))
 	{
 		if (core->player == 0)
 			core->player = (strstr(line, "mlambert")) ? 'o' : 'x';
 		if (*(line + 1) == 'l' && core.map.y == -1 && core.map.x == -1)
-			size_init_piece(core, line);
-
-
-
-
+			size_init_piece(core, line, 0);
+		if (ft_isdigit(*line))
+			if (visuals(&core, line, 0) == -1)
+				return (0);
+		if (*line == '.' || *line == '*')
+			if (visuals(&core, line, 1))
+				return (0);
+		if (core->turn == 1)
+			masterplan(&core);
 	}
-
-
-
-
 }
