@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 17:10:01 by mlambert          #+#    #+#             */
-/*   Updated: 2017/03/10 16:11:00 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/03/11 17:06:18 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,15 @@ int		positions(t_core *core, int i, int j)
 	anchor_x = core->map.j;
 	top_yi = core->yay.top_yi;
 	top_xi = core->yay.top_xi;
-
 	i = ((i >= anchor_y) ? top_yi + (i - anchor_y) : top_yi - (anchor_y - i));
 	j = ((j >= anchor_x) ? top_xi + (j - anchor_x) : top_xi - (anchor_x - j));
 //	printf("top_yi %d\n", core->yay.top_yi);
 //	printf("top_xi %d\n", core->yay.top_xi);
 //	printf("I %d\n", i);
 //	printf("J %d\n", j);
-	if (i > core->map.y || i < 0)
+	if (i + core->y_move > core->map.y || i < 0)
 		return (0);
-	else if (j > core->map.x || j < 0)
+	else if (j + core->x_move > core->map.x || j < 0)
 		return (0);
 	else if (core->map.visual[i][j] != '.')
 		return (0);
@@ -84,11 +83,15 @@ int			check(t_core *core, int y, int x, int draw)
 			{
 				if (draw == 0)
 				{
+					core->nb_blok += 1;
 					if (!(positions(core, y, x)))
 						return (0);
 				}
-				else
+				if (draw != 0 && core->nb_blok != 0)
+				{
+					core->nb_blok -= 1;
 					set_piece(core, y, x);
+				}
 			}
 			x--;
 		}
@@ -110,8 +113,12 @@ int		ladder(t_core *core, int draw)
 		while (tmp_x != -1)
 		{
 			if (core->piece.visual[tmp_y][tmp_x] == '*')
+			{
 				if (!(check(core, tmp_y, tmp_x, draw)))
 					return (0);
+				else
+					return (1);
+			}
 			tmp_x--;
 		}
 		tmp_x = core->piece.x - 1;
@@ -139,10 +146,6 @@ int		scanning(t_core *core, int scan)
 			{
 				core->yay.top_yi = i;
 				core->yay.top_xi = j;
-				printf("I %d\n", i);
-				printf("J %d\n", j);
-				printf("top_yi %d\n", core->yay.top_yi);
-				printf("top_xi %d\n", core->yay.top_xi);
 				return (1);
 			}
 			j++;
@@ -171,11 +174,13 @@ void	masterplan(t_core *core, t_block *map, t_block *piece)
 	i = 0;
 //	scanning(core, 1);
 	scanning(core, 0);
-	printf("%s\n", "  O.O ");
 	display(core, 1);
 
-
 	rise(core);
+
+
+
+
 	i = 0;
 	j = 0;
 	printf("\n");
@@ -204,6 +209,7 @@ void	masterplan(t_core *core, t_block *map, t_block *piece)
 				13	.................
 				14	.................
 
+				..*..
 				.***.
 				..*..
 */
