@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 17:10:01 by mlambert          #+#    #+#             */
-/*   Updated: 2017/03/11 17:06:18 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/03/12 16:33:11 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int		positions(t_core *core, int i, int j)
 //	printf("top_xi %d\n", core->yay.top_xi);
 //	printf("I %d\n", i);
 //	printf("J %d\n", j);
-	if (i + core->y_move > core->map.y || i < 0)
+	if (i > core->map.y || i < 0)
 		return (0);
-	else if (j + core->x_move > core->map.x || j < 0)
+	else if (j > core->map.x || j < 0)
 		return (0);
 	else if (core->map.visual[i][j] != '.')
 		return (0);
@@ -156,12 +156,40 @@ int		scanning(t_core *core, int scan)
 	return (0);
 }
 
-int		rise(t_core *core)
+int		rise(t_core *core, t_scan *yay, t_block *map, char ***visual)
 {
-	if (!(ladder(core, 0)))
-	 	return (0);
-	ladder(core, 1);
+	int	click;
+	int	*tmp_x;
+	int	*tmp_y;
 
+	click = 0;
+	tmp_x = &yay->top_xi;
+	tmp_y = &yay->top_yi;
+	while ((yay->top_xi <= map->x - 1 && (visual[0][*tmp_y][*tmp_x] == core->player || visual[0][*tmp_y][*tmp_x] == core->player - 32)))
+	{
+		if (ladder(core, 0) == 0)
+		{
+			printf("VISUARU %c\n", visual[0][*tmp_y][*tmp_x]);
+			*tmp_x += 1;
+			printf("VISUARUX %c\n", visual[0][*tmp_y][*tmp_x]);
+		}
+		else
+		{
+			click = 1;
+			break ;
+		}
+		if (visual[0][*tmp_y][*tmp_x] != core->player && visual[0][*tmp_y][*tmp_x] != core->player - 32)
+		{
+			printf("VISUARUZ %c\n", visual[0][*tmp_y][*tmp_x]);
+			printf("%s\n", "ZEARRRRRRRRRR");
+		 	break ;
+		}
+	}
+//	return ((click == 1) ? ladder(core, 1) : 0);
+	if (click == 1)
+		ladder(core, 1);
+	else
+		return (0);
 	return (1);
 }
 
@@ -176,9 +204,7 @@ void	masterplan(t_core *core, t_block *map, t_block *piece)
 	scanning(core, 0);
 	display(core, 1);
 
-	rise(core);
-
-
+	rise(core, &core->yay, &core->map, &core->map.visual);
 
 
 	i = 0;
