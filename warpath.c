@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/26 22:57:46 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/08 21:52:05 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/09 16:32:56 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,47 +155,25 @@ int		warpath(t_core *core, t_block *map, t_block *piece)
 	scanning(core, 1);
 	scanning_low(core, 0);
 	scanning_low(core, 1);
+	if (core->start == -1)
+		core->start = core->yay.top_xi < core->nmy.top_xi ? 1 : 2;
 	if (core->opti_y == 2147483647 && core->opti_x == 2147483647)
 	{
 		core->opti_y = core->map.i;
 		core->opti_x = core->map.j;
 	}
-// 	if (core->start == 1)
-// 	{
-// //		if (core->yay.low_yi != core->map.y - 1 && core->nmy.low_yi >= core->yay.low_yi)
-// //			ideal_set(core, core->map.y, (core->start == 1 ? core->map.x : 0));
-// 		if (core->yay.top_yi != 0 && core->nmy.top_yi >= core->nmy.top_yi)
-// 			ideal_set(core, 0, core->map.x);
-// 		else if (core->yay.low_yi <= core->nmy.low_yi && core->yay.low_yi != core->map.y - 1) /*&& core->nmy.top_yi != 0*/
-// 		{
-// 			radar(core, core->map.i, core->map.j, 0);
-// 			ideal_set(core, core->map.y, core->map.x - core->where_x);
-// 		}
-// 	/*	else if (core->yay.top_yi > core->nmy.top_yi && core->yay.top_yi != 0)
-// 			ideal_set(core, 0, (core->start == 1 ? (core->map.x / 2) : (core->map.x / 2)));*/
-// 		else
-// 			hunt(core);
-// 	}
-// 	else
-// 	{
-		if (core->yay.low_yi != core->map.y - 1 && core->nmy.low_yi >= core->yay.low_yi)
-			ideal_set(core, core->map.y, (core->start == 1 ? core->map.x : 0));
-		else if (core->yay.top_yi >= core->nmy.top_yi && core->yay.top_yi != 0 /*&& core->nmy.top_yi != 0*/)
-		{
-			radar(core, core->map.i, core->map.j, 0);
-			ideal_set(core, 0, (core->start == 1 ? core->map.x : 0 + core->where_x));
-		}
-	/*	else if (core->yay.top_yi > core->nmy.top_yi && core->yay.top_yi != 0)
-			ideal_set(core, 0, (core->start == 1 ? (core->map.x / 2) : (core->map.x / 2)));*/
-		else
-			hunt(core);
-	// }
-//	core->radar = (core->radar == -1) ? radar :
-/*	if (core->yay.top_yi >= core->nmy.top_yi && \
-		core->nmy.top_yi != 0 && \
-		core->constant_y >= -2  && core->constant_y <= 2)
-		ideaal_y
-	if (core->yay.top_yi >= core->nmy.top_yi)
-		thrust(core);*/
+	if (core->start == 2)
+		rise(core);
+	else
+		fall(core);
+	if (core->yay.low_yi != core->map.y - 1 && core->nmy.low_yi >= core->yay.low_yi)
+		ideal_set(core, core->map.y, (core->start == 1 ? core->map.x : 0));
+	else if (core->yay.top_yi >= core->nmy.top_yi && core->yay.top_yi != 0)
+	{
+		radar(core, core->map.i, core->map.j, 0);
+		ideal_set(core, 0, (core->start == 1 ? core->map.x : 0 + core->where_x));
+	}
+	else
+		hunt(core);
 	return (0);
 }
