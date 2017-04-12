@@ -6,39 +6,11 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/26 22:57:46 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/09 16:32:56 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/12 17:33:48 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-/*int			corner_scan(t_core *core)
-{
-	int		i;
-	int		j;
-
-	j = 0;
-	i = 0;
-	while (core->map.visual[i] && i >= core->map.y / 2)
-	{
-		while (core->map.visual[i[j] && core->map.j / 2)
-		{
-			if ()
-		}
-
-	}
-
-
-}*/
-
-
-/*int			angle(t_core *core, int y, int x, int n)
-{
-
-
-
-
-}*/
 
 void		ideal_set(t_core *core, int ideal_y, int ideal_x)
 {
@@ -146,11 +118,6 @@ void	hunt(t_core *core)
 
 int		warpath(t_core *core, t_block *map, t_block *piece)
 {
-	int		ideal_y;
-	int		ideal_x;
-
-	ideal_y = 0;
-	ideal_x	= 0;
 	scanning(core, 0);
 	scanning(core, 1);
 	scanning_low(core, 0);
@@ -162,16 +129,13 @@ int		warpath(t_core *core, t_block *map, t_block *piece)
 		core->opti_y = core->map.i;
 		core->opti_x = core->map.j;
 	}
-	if (core->start == 2)
-		rise(core);
-	else
-		fall(core);
 	if (core->yay.low_yi != core->map.y - 1 && core->nmy.low_yi >= core->yay.low_yi)
-		ideal_set(core, core->map.y, (core->start == 1 ? core->map.x : 0));
+		ideal_set(core, core->nmy.low_yi, (core->nmy.low_xi));
 	else if (core->yay.top_yi >= core->nmy.top_yi && core->yay.top_yi != 0)
 	{
-		radar(core, core->map.i, core->map.j, 0);
-		ideal_set(core, 0, (core->start == 1 ? core->map.x : 0 + core->where_x));
+		core->angle_x = x_angle(core);
+		ideal_set(core, 0, (core->start == 1 ? \
+		core->map.x : (0 + core->angle_x)));
 	}
 	else
 		hunt(core);
