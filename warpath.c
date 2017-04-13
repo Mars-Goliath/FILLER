@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/26 22:57:46 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/12 17:33:48 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:46:02 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,9 @@ int		echo_side(t_core *core, int y, int x, int n)
 			j = 0;
 			i++;
 		}
-		n += 2;
-		y--;
-		i = 0;
-		j = 0;
+		reinit_side(&n, &y, &i, &j);
 	}
 	return (n);
-}
-
-void	reinit(int	*n, int *i, int *y, int *x)
-{
-	*n += 2;
-	*i = 0;
-	*x -= 1;
-	*y -= 1;
 }
 
 int		radar(t_core *core, int	y, int x, int n)
@@ -83,7 +72,6 @@ int		radar(t_core *core, int	y, int x, int n)
 				{
 					core->where_x = (x + j);
 					return ((n == 0) ? 0 : n / 2);
-
 				}
 				j++;
 			}
@@ -116,7 +104,7 @@ void	hunt(t_core *core)
 	}
 }
 
-int		warpath(t_core *core, t_block *map, t_block *piece)
+int		warpath(t_core *core)
 {
 	scanning(core, 0);
 	scanning(core, 1);

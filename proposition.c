@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 13:46:59 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/12 18:41:26 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 20:48:11 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		compare(t_core *core, int *i, int *j)
 	*j += 1;
 }
 
-int			decal(t_core *core, t_block *map, t_block *piece)
+int			decal(t_core *core, t_block *piece)
 {
 	int		i;
 	int		j;
@@ -56,8 +56,8 @@ int			proposition(t_core *core, t_block *map, t_block *piece)
 		{
 			piece->i = 0;
 			piece->j = 0;
-			if ((decal(core, map, piece) == 1))
-				warpath(core, &core->map, &core->piece);
+			if ((decal(core, piece) == 1))
+				warpath(core);
 			core->yay.block = 0;
 			core->nmy.block = 0;
 			map->j++;
