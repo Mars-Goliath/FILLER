@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/25 13:46:59 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/13 20:48:11 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:38:27 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			proposition(t_core *core, t_block *map, t_block *piece)
 	int		i;
 
 	i = 0;
-	while(map->visual[map->i] && (map->i + piece->y) <= map->y)
+	while (map->visual[map->i] && (map->i + piece->y) <= map->y)
 	{
 		while (map->visual[map->i][map->j] && (map->j + piece->x) <= map->x)
 		{

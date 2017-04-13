@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 18:17:26 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/12 18:36:53 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:41:05 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	reinit_after_play(t_core *core)
 
 void	player_and_nmy(t_core *core, char *line)
 {
-	line[10] == '1' ? (core->player = 'O') : (core->player = 'X');
+	if (line[10] == '1')
+		core->player = 'O';
+	else
+		core->player = 'X';
 	core->enemy = (core->player == 'O') ? 'X' : 'O';
 }
 

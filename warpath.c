@@ -6,13 +6,13 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/26 22:57:46 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/13 20:46:02 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:55:40 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void		ideal_set(t_core *core, int ideal_y, int ideal_x)
+void	ideal_set(t_core *core, int ideal_y, int ideal_x)
 {
 	if (ABS(core->map.i - ideal_y) < ABS(core->opti_y - ideal_y))
 	{
@@ -55,7 +55,7 @@ int		echo_side(t_core *core, int y, int x, int n)
 	return (n);
 }
 
-int		radar(t_core *core, int	y, int x, int n)
+int		radar(t_core *core, int y, int x, int n)
 {
 	int	i;
 	int	j;
@@ -69,10 +69,7 @@ int		radar(t_core *core, int	y, int x, int n)
 			while (j != core->piece.x + n && core->map.visual[y + i][x + j])
 			{
 				if (core->map.visual[y + i][x + j] == core->enemy)
-				{
-					core->where_x = (x + j);
 					return ((n == 0) ? 0 : n / 2);
-				}
 				j++;
 			}
 			j = 0;
@@ -117,7 +114,8 @@ int		warpath(t_core *core)
 		core->opti_y = core->map.i;
 		core->opti_x = core->map.j;
 	}
-	if (core->yay.low_yi != core->map.y - 1 && core->nmy.low_yi >= core->yay.low_yi)
+	if (core->yay.low_yi != core->map.y - 1 && \
+		core->nmy.low_yi >= core->yay.low_yi)
 		ideal_set(core, core->nmy.low_yi, (core->nmy.low_xi));
 	else if (core->yay.top_yi >= core->nmy.top_yi && core->yay.top_yi != 0)
 	{

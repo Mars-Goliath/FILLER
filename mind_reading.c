@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   mind_reading.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mlambert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/20 20:24:55 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/12 18:02:10 by mlambert         ###   ########.fr       */
+/*   Created: 2017/04/13 21:59:19 by mlambert          #+#    #+#             */
+/*   Updated: 2017/04/13 21:59:27 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
+void	low(t_core *core int scan, int i, int j)
+{
+	if (scan == 0)
+	{
+		core->yay.low_yi = i;
+		core->yay.low_xi = j;
+	}
+	else
+	{
+		core->nmy.low_yi = i;
+		core->nmy.low_xi = j;
+	}
+}
+
+void	top(t_core *core int scan, int i, int j)
+{
+	if (scan == 0)
+	{
+		core->yay.top_yi = i;
+		core->yay.top_xi = j;
+	}
+	else
+	{
+		core->nmy.top_yi = i;
+		core->nmy.top_xi = j;
+	}
+}
 
 int		x_angle(t_core *core)
 {
@@ -27,7 +55,6 @@ int		x_angle(t_core *core)
 		{
 			if (core->map.visual[i][j] == core->enemy)
 				closest = (j > closest) ? j : closest;
-
 		}
 		j = core->map.x;
 		i++;
@@ -50,8 +77,7 @@ int		scanning_low(t_core *core, int scan)
 		{
 			if (core->map.visual[i][j] == id)
 			{
-				scan == 0 ? (core->yay.low_yi = i) : (core->nmy.low_yi = i);
-				scan == 0 ? (core->yay.low_xi = j) : (core->nmy.low_xi = j);
+				low(core, scan, i, j);
 				return (1);
 			}
 			j--;
@@ -77,8 +103,7 @@ int		scanning(t_core *core, int scan)
 		{
 			if (core->map.visual[i][j] == id)
 			{
-				scan == 0 ? (core->yay.top_yi = i) : (core->nmy.top_yi = i);
-				scan == 0 ? (core->yay.top_xi = j) : (core->nmy.top_xi = j);
+				top(core, scan, i, j);
 				return (1);
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: mlambert <mlambert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 20:29:05 by mlambert          #+#    #+#             */
-/*   Updated: 2017/04/13 20:32:10 by mlambert         ###   ########.fr       */
+/*   Updated: 2017/04/13 21:56:07 by mlambert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	reinit_side(int *n, int *y, int *i, int *j)
 	*j = 0;
 }
 
-void	reinit(int	*n, int *i, int *y, int *x)
+void	reinit(int *n, int *i, int *y, int *x)
 {
 	*n += 2;
 	*i = 0;
